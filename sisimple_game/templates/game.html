@@ -16,9 +16,7 @@
 
   </head>
   <body>
-    <p id="hero">
 
-    </p>
     <div class="conatiner" style="margin-top:3%; margin-left:3%">
     <button class="btn btn-success" id='create_hero'>New Hero</button>
     </div>
@@ -26,11 +24,17 @@
     <button class="btn btn-primary" id='fight_to_death'>Fight To Death</button>
     </div>
 
+    <div class="conatiner" style="margin-top:3%; margin-left:3%">
+    <button class="btn btn-info" id='become_champion'>Become Champion</button>
+    </div>
+    <p id="hero">
+
+    </p>
 
     <script>
 
 
-  
+
 
 
      $("#create_hero").click(function () {
@@ -42,10 +46,10 @@
 
              success: function (data) {
                  //document.write(data);
-                 console.log(data['status']);
-                 console.log(data)
-                 document.getElementById("hero").innerHTML = data['new_hero'];
-
+                 //console.log(data['status']);
+                 console.log(data.win_score);
+                 //document.getElementById("#hero").innerHTML = data['new_hero'];
+                  $('#hero').html(data);
                 //  document.getElementById(data.task_id).setAttribute("data", data.task_id)
 
              }, error: function (err) {
@@ -63,6 +67,32 @@ $("#fight_to_death").click(function () {
 
   $.ajax({
         url: 'http://127.0.0.1:8000/fight_to_death/', // the endpoint
+        type: "POST", // http method
+
+
+        success: function (data) {
+            //document.write(data);
+            console.log(data['status']);
+            console.log(data)
+            document.getElementById("hero").innerHTML = data['new_hero'];
+
+           //  document.getElementById(data.task_id).setAttribute("data", data.task_id)
+
+        }, error: function (err) {
+            console.log(err)
+        }
+
+
+    });
+
+
+
+});
+
+$("#become_champion").click(function () {
+
+  $.ajax({
+        url: 'http://127.0.0.1:8000/become_champion/', // the endpoint
         type: "POST", // http method
 
 

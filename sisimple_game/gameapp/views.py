@@ -29,6 +29,9 @@ class FightToDeath(APIView):
     def post(self, request, format=None):
 
         print("entered FIGHT TO DEATH post function")
+        data={
+        'fail':'fail'
+        }
         if request.method == 'POST':
             print("inside post if")
 
@@ -58,7 +61,9 @@ class FightToDeath(APIView):
                 else:
                     print("else------------------------------")
                     get_hero=Hero.objects.get(id=chosen[1])
-                    get_hero.win_score=get_hero.win_score+1
+                    score=get_hero.win_score
+                    print(type(score))
+                    get_hero.win_score=int(score)+1
                     get_hero.save()
 
                 print("********************************************")
@@ -67,4 +72,30 @@ class FightToDeath(APIView):
                 'status':get_hero.status,
                 'win_score':get_hero.win_score,
                 }
+            return Response(data)
+
+        return Response(data)
+
+
+
+
+class become_champion(APIView):
+
+    def post(self, request, format=None):
+
+        print("entered become Chanpion get function")
+        if request.method == 'POST':
+            print("inside get if")
+            get_alive_list=Hero.objects.filter(status='alive').order_by('-win_score')
+            get_champion=get_alive_list[0]
+            print("champ======================",get_champion.status)
+            for alive_obj in get_alive_list:
+                if alive_obj.id != get_champion.id:
+                    alive_obj.status='dead'
+                    alive_obj.save()
+            data={
+            'new_hero':get_champion.id,
+            'status':get_champion.status,
+            'win_score':get_champion.win_score,
+            }
         return Response(data)
