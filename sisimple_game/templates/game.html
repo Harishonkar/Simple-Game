@@ -1,0 +1,90 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+
+<!-- jQuery rest -->
+
+<!-- WARNING: I advise not using this link, instead download and host this library on your own server as GitHub has download limits -->
+
+  </head>
+  <body>
+    <p id="hero">
+
+    </p>
+    <div class="conatiner" style="margin-top:3%; margin-left:3%">
+    <button class="btn btn-success" id='create_hero'>New Hero</button>
+    </div>
+    <div class="conatiner" style="margin-top:3%; margin-left:3%">
+    <button class="btn btn-primary" id='fight_to_death'>Fight To Death</button>
+    </div>
+
+
+    <script>
+
+
+  
+
+
+     $("#create_hero").click(function () {
+
+       $.ajax({
+             url: 'http://127.0.0.1:8000/create_hero/', // the endpoint
+             type: "POST", // http method
+
+
+             success: function (data) {
+                 //document.write(data);
+                 console.log(data['status']);
+                 console.log(data)
+                 document.getElementById("hero").innerHTML = data['new_hero'];
+
+                //  document.getElementById(data.task_id).setAttribute("data", data.task_id)
+
+             }, error: function (err) {
+                 console.log(err)
+             }
+
+
+         });
+
+
+
+});
+
+$("#fight_to_death").click(function () {
+
+  $.ajax({
+        url: 'http://127.0.0.1:8000/fight_to_death/', // the endpoint
+        type: "POST", // http method
+
+
+        success: function (data) {
+            //document.write(data);
+            console.log(data['status']);
+            console.log(data)
+            document.getElementById("hero").innerHTML = data['new_hero'];
+
+           //  document.getElementById(data.task_id).setAttribute("data", data.task_id)
+
+        }, error: function (err) {
+            console.log(err)
+        }
+
+
+    });
+
+
+
+});
+
+    </script>
+  </body>
+</html>
