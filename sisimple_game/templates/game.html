@@ -1,12 +1,13 @@
 
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="utf-8">
-    <title></title>
 
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 
 
 
@@ -28,7 +29,7 @@
     <button class="btn btn-info" id='become_champion'>Become Champion</button>
     </div>
     <p id="hero">
-
+empty
     </p>
 
     <script>
@@ -37,28 +38,29 @@
 
 
 
-     $("#create_hero").click(function () {
+
+     $("#create_hero").click(function (e) {
 
        $.ajax({
              url: 'http://127.0.0.1:8000/create_hero/', // the endpoint
              type: "POST", // http method
 
 
-             success: function (data) {
-                 //document.write(data);
-                 //console.log(data['status']);
-                 console.log(data.win_score);
-                 //document.getElementById("#hero").innerHTML = data['new_hero'];
-                  $('#hero').html(data);
-                //  document.getElementById(data.task_id).setAttribute("data", data.task_id)
+            crossDomain: true,
 
-             }, error: function (err) {
-                 console.log(err)
-             }
+             success: function (data) {
+               document.getElementById("hero").innerHTML=data['new_hero']+"&nbsp"+data['status']+"&nbsp"+data['win_score'];
+
+             },
+             error: function (err) {
+                 console.log("error",err);
+             },
 
 
          });
-
+         // Stop default behaviour until ajax request has been done
+         e.stopImmediatePropagation();
+            return false;
 
 
 });
@@ -73,13 +75,13 @@ $("#fight_to_death").click(function () {
         success: function (data) {
             //document.write(data);
             console.log(data['status']);
-            console.log(data)
-            document.getElementById("hero").innerHTML = data['new_hero'];
-
+            console.log(data);
+            //document.getElementById("hero").innerHTML = data['new_hero'];
+            document.getElementById("hero").innerHTML=data['new_hero']+"&nbsp"+data['status']+"&nbsp"+data['win_score'];
            //  document.getElementById(data.task_id).setAttribute("data", data.task_id)
 
         }, error: function (err) {
-            console.log(err)
+            console.log(err);
         }
 
 
@@ -99,13 +101,13 @@ $("#become_champion").click(function () {
         success: function (data) {
             //document.write(data);
             console.log(data['status']);
-            console.log(data)
-            document.getElementById("hero").innerHTML = data['new_hero'];
-
+            console.log(data);
+            //document.getElementById("hero").innerHTML = data['new_hero'];
+            document.getElementById("hero").innerHTML=data['new_hero']+"&nbsp"+data['status']+"&nbsp"+data['win_score'];
            //  document.getElementById(data.task_id).setAttribute("data", data.task_id)
 
         }, error: function (err) {
-            console.log(err)
+            console.log(err);
         }
 
 
